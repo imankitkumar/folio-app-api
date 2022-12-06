@@ -27,7 +27,7 @@ app.post('/api/assets', async (req, res) => {
         
     } catch (error) {
 
-        res.status(400).json({ status: 'failed', data: null})
+        res.status(400).json({ status: 'failed', data: error})
         
     }
     
