@@ -10,7 +10,6 @@ const handleFetch = async (webpage) => {
 
 const loadAssets = async (walletAddress) => {
 
-    try { 
         const [ETHEREUM,POLYGON,BNBCHAIN] = await Promise.all(links.map(link => handleFetch(`${link}address/${walletAddress}`)))
         const results = [{
         chain: 'ethereum',
@@ -29,11 +28,7 @@ const loadAssets = async (walletAddress) => {
     }]
         return results
         
-    } catch (error) {
-
-        console.log(error)
-        
-    }
+    
 
 }
 
