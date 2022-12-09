@@ -21,16 +21,12 @@ app.post('/api/assets', async (req, res) => {
     }
 
     try {
-
         const assets = await loadAssets(address)
         res.status(200).json({ status: 'success',data: assets })
         
     } catch (error) {
-
-        res.status(400).json({ status: 'failed', data: null})
-        
-    }
-    
+        res.status(400).json({ status: 'failed', data: error})       
+    }    
 
 })
 
