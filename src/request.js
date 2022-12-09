@@ -8,9 +8,17 @@ const handleFetch = async (webpage) => {
     return assets
 }
 
-const loadAssets = async (walletAddress) => {
+const loadAssets = async (req,res) => {
 
-        const [ETHEREUM,POLYGON,BNBCHAIN] = await Promise.all(links.map(link => handleFetch(`${link}address/${walletAddress}`)))
+    const { address } = req.body
+
+    if(!address || !address.startsWith('0x') || address.length < 20){
+        return res.json({ status: 'failed', msg: 'missing or invalid wallet address'})
+    }
+
+    try {
+
+        const [ETHEREUM,POLYGON,BNBCHAIN] = await Promise.all(links.map(link => handleFetch(`${link}address/${address}`)))
         const results = [{
         chain: 'ethereum',
         total: ETHEREUM.length,
@@ -26,9 +34,14 @@ const loadAssets = async (walletAddress) => {
         assets: BNBCHAIN
 
     }]
-        return results
+
+    res.status(200).json({ status: 'success',data: results }) 
         
-    
+    } catch (error) {
+
+        res.status(500).json({ status: 'failed',error: error }) 
+        
+    }     
 
 }
 
