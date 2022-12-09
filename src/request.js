@@ -1,25 +1,18 @@
-const request = require('request-promise')
-const scrapeAssets = require('./util/scraper')
-const links = require('./webpages/explorers')
-const createBrowser = require('browserless')
-const browser = createBrowser()
+import fetch from 'got';
+import scrapeAssets from './util/scraper.js'
+import links from './webpages/explorers.js'
 
-
-
-const handleFetch = async (browserless,webpage) => {
-
-    const html = await browserless.html(webpage)
+const handleFetch = async (webpage) => {
+    const html = await fetch(webpage).text()
     const assets = scrapeAssets(webpage,html)
     return assets
-
 }
 
 const loadAssets = async (walletAddress) => {
 
-    const browserless = await browser.createContext()
-    const [ETHEREUM,POLYGON,BNBCHAIN] = await Promise.all(links.map(link => handleFetch(browserless,`${link}address/${walletAddress}`)))
-    
-    const results = [{
+    try { 
+        const [ETHEREUM,POLYGON,BNBCHAIN] = await Promise.all(links.map(link => handleFetch(`${link}address/${walletAddress}`)))
+        const results = [{
         chain: 'ethereum',
         total: ETHEREUM.length,
         assets: ETHEREUM
@@ -34,9 +27,14 @@ const loadAssets = async (walletAddress) => {
         assets: BNBCHAIN
 
     }]
-    
-    return results
+        return results
+        
+    } catch (error) {
+
+        console.log(error)
+        
+    }
 
 }
 
-module.exports = loadAssets
+export default loadAssets

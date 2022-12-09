@@ -1,5 +1,5 @@
-const express = require('express')
-const loadAssets = require('./src/request')
+import express from 'express'
+import loadAssets from './src/request.js'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -25,11 +25,8 @@ app.post('/api/assets', async (req, res) => {
         res.status(200).json({ status: 'success',data: assets })
         
     } catch (error) {
-
         res.status(400).json({ status: 'failed', data: error})       
     }    
-    
-
 
 })
 

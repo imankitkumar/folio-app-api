@@ -3,5 +3,4 @@ const links = [
     'https://polygonscan.com/',
     'https://bscscan.com/',
 ]
-
-module.exports = links
+export default links

@@ -1,4 +1,4 @@
-const cheerio = require('cheerio')
+import cheerio from 'cheerio'
 
 function fixNativeAssetValue(value){
   let formattedValue = value.split(' ')[0].slice(1)
@@ -44,4 +44,4 @@ function scrapeAssets(webpage,html_payload){
     return assets
 }
 
-module.exports = scrapeAssets
+export default scrapeAssets
