@@ -3,13 +3,15 @@ import httpsProxyAgent from 'https-proxy-agent'
 import scrapeAssets from './util/scraper.js'
 import links from './webpages/explorers.js'
 
+const proxy = new httpsProxyAgent('http://192.168.1.8:8080')
+
 const handleFetch = async (webpage) => {
+    console.log("running")
   
     const res = await fetch(webpage,{
-        agent: new httpsProxyAgent('http://192.168.1.8:8080')
+        agent: proxy
     })
     const html = await res.text()
-    console.log(html)
     const assets = scrapeAssets(webpage,html)
     return assets
 }
