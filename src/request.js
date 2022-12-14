@@ -3,7 +3,7 @@ import httpsProxyAgent from 'https-proxy-agent'
 import scrapeAssets from './util/scraper.js'
 import links from './webpages/explorers.js'
 
-const proxy = new httpsProxyAgent('http://192.168.1.8:8080')
+const proxy = new httpsProxyAgent('http://abcd:abcd@192.168.1.8:8080')
 
 const handleFetch = async (webpage) => {
     console.log("running")
