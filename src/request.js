@@ -10,7 +10,7 @@ const handleFetch = async (webpage) => {
     const res = await fetch(webpage,{
         //agent: proxy
     })
-     console.log(res.statusText)
+     console.log(res)
   
     const html = await res.text()
     const assets = scrapeAssets(webpage,html)
