@@ -9,6 +9,7 @@ const handleFetch = async (webpage) => {
         agent: new httpsProxyAgent('http://192.168.1.8:8080')
     })
     const html = await res.text()
+    console.log(html)
     const assets = scrapeAssets(webpage,html)
     return assets
 }
