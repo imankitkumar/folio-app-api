@@ -1,16 +1,17 @@
 import fetch from 'node-fetch'
-import httpsProxyAgent from 'https-proxy-agent'
+//import httpsProxyAgent from 'https-proxy-agent'
 import scrapeAssets from './util/scraper.js'
 import links from './webpages/explorers.js'
 
-const proxy = new httpsProxyAgent('http://abcd:abcd@192.168.1.8:8080')
+//const proxy = new httpsProxyAgent('http://127.0.0.1:8080')
 
 const handleFetch = async (webpage) => {
-    console.log("running")
-  
+   
     const res = await fetch(webpage,{
-        agent: proxy
+        //agent: proxy
     })
+     console.log(res.statusText)
+  
     const html = await res.text()
     const assets = scrapeAssets(webpage,html)
     return assets
