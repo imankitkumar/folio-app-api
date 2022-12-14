@@ -1,23 +1,25 @@
-import fetch from 'got';
+import fetch from 'node-fetch'
+import httpsProxyAgent from 'https-proxy-agent'
 import scrapeAssets from './util/scraper.js'
 import links from './webpages/explorers.js'
 
 const handleFetch = async (webpage) => {
-    const html = await fetch(webpage).text()
+  
+    const res = await fetch(webpage,{
+        agent: new httpsProxyAgent('http://192.168.1.8:8080')
+    })
+    const html = await res.text()
     const assets = scrapeAssets(webpage,html)
     return assets
 }
 
 const loadAssets = async (req,res) => {
-
     const { address } = req.body
-
     if(!address || !address.startsWith('0x') || address.length < 20){
         return res.json({ status: 'failed', msg: 'missing or invalid wallet address'})
     }
 
     try {
-
         const [ETHEREUM,POLYGON,BNBCHAIN] = await Promise.all(links.map(link => handleFetch(`${link}address/${address}`)))
         const results = [{
         chain: 'ethereum',
@@ -32,15 +34,11 @@ const loadAssets = async (req,res) => {
         chain: 'bnb chain',
         total: BNBCHAIN.length,
         assets: BNBCHAIN
-
     }]
-
-    res.status(200).json({ status: 'success',data: results }) 
+        res.status(200).json({ status: 'success',data: results }) 
         
     } catch (error) {
-
-        res.status(500).json({ status: 'failed',error: error }) 
-        
+        res.status(500).json({ status: 'failed',error: error })       
     }     
 
 }

@@ -1,4 +1,5 @@
-const req =  require('request-promise')
+import Proxy from 'free-proxy'
 
-req('https://polygonscan.com/tokenholdingsHandler.aspx?&a=0x70bfe28f7e488fc36c0054c9486f201a759c4707&fav=&ps=10')
-.then(res => console.log(res))
+const list = new Proxy()
+
+list.get().then(res => console.log(res))

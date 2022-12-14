@@ -11,7 +11,9 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "express": "^4.18.2",
-    "got": "^12.5.3"
+    "https-proxy-agent": "^5.0.1",
+    "node-fetch": "^3.3.0",
+    "nodemon": "^2.0.20"
   },
   "type": "module"
 }
